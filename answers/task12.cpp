@@ -7,7 +7,7 @@ int main(int argc, char *argv[])
    printf("n в последовательной области (начало): %d\n", n);
 #pragma omp parallel private(n)
    {
-      printf("Значение n на нити (на входе): %d\n", n);
+      printf("Значение n на нити (на входе): %d\n", n); //Значение не определено, т.к private. Не работает
       /* Присвоим переменной n номер текущей нити */
       n=omp_get_thread_num();
       printf("Значение n на нити (на выходе): %d\n", n);

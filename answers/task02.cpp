@@ -1,16 +1,18 @@
 #include <stdio.h>
 #include <omp.h>
-
+//Подлкючение заголовочных файлов, включая Openmp
 int main(int argc, char *argv[])
 {
-   omp_set_num_threads(2);
-#pragma omp parallel num_threads(3)
+   omp_set_num_threads(2);//Устанавливает количество потоков, которое может быть запрошено для
+                         //параллельного блока.
+#pragma omp parallel num_threads(3)//Устанавливает количество потоков в параллельном блоке. 
+   //По умолчанию, количество потоков равно количеству виртуальных процессоров.
    {
-      printf("Параллельная область 1\n");
+      printf("Параллельная область 1\n");//Выводятся 3 потока
    }
 #pragma omp parallel
    {
-      printf("Параллельная область 2\n");
+      printf("Параллельная область 2\n");//Выводятся 2 потока
    }
 }
 
@@ -18,10 +20,12 @@ int main(int argc, char *argv[])
 int main(int argc, char *argv[])
 {
    int count = 0;
-#pragma omp parallel reduction (+: count)
+#pragma omp parallel reduction (+: count)//reduction позволяет собрать вместе в главном потоке результаты вычислений частичных сумм
+   //+ это оператор . count это переменная, в которой хранятся промежуточные значения.
+   //Каждый поток знает инфу только о себе. 
    {
       count++;
-      printf("Текущее значение count: %d\n", count);
+      printf("Текущее значение count: %d\n", count);//count=1 сколько кол-во потоков
    }
-   printf("Число нитей: %d\n", count);
+   printf("Число нитей: %d\n", count);//count = кол-во потоков
 }

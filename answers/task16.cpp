@@ -4,7 +4,7 @@
 int main(int argc, char *argv[])
 {
    int n;
-#pragma omp parallel private(n)
+#pragma omp parallel private(n)//Смотри билет 9
    {
       n=omp_get_thread_num();
 #pragma omp sections

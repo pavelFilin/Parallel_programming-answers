@@ -8,7 +8,7 @@ int main(int argc, char *argv[])
    omp_set_nested(1);//вложенный параллелизм разрешен
 #pragma omp parallel private(n)//каждый поток будет хранить свою копию переменной
    {
-      n=omp_get_thread_num();//Возвращает номер потока
+      n=omp_get_thread_num();//Присваивает номер потока переменной
 #pragma omp parallel
       {
          printf("Часть 1, нить %d - %d\n", n,

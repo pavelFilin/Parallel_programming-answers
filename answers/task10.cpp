@@ -4,19 +4,27 @@
 int main(int argc, char *argv[])
 {
    int i;
-#pragma omp parallel private(i)
+#pragma omp parallel private(i) //
    {
-#pragma omp for schedule (static)
-//#pragma omp for schedule (static, 1)
+#pragma omp for schedule (static)//Для распределения работы между процессами в OpenMP
+      //имеется директива schedule с параметрами, позволяющими задавать различные режимы загрузки процессоров
+//#pragma omp for schedule (static, 1) //В этом случае вся совокупность загружаемых процессов разбивается на равные порции размера chunk,
+     // и эти порции последовательно распределяются между процессорами 
+     // (или потоками, которые затем и выполняются на этих процессорах) с первого до последнего и т. д.
 //#pragma omp for schedule (static, 2)
-//#pragma omp for schedule (dynamic)
+//#pragma omp for schedule (dynamic) //В этом случае вся совокупность загружаемых процессов, 
+      //как и в предыдущем варианте, разбивается на равные порции размера chunk, по умолчанию равные 1
+      //но эти порции загружаются последовательно в освободившиеся потоки (процессоры).
 //#pragma omp for schedule (dynamic, 2)
-//#pragma omp for schedule (guided)
+//#pragma omp for schedule (guided) //В этом случае вся совокупность загружаемых процессов разбивается на порции,
+      //размер которых определяется операционной системой динамически и не превышает размер chunk. 
+      //  Загрузка порций происходит, как и в динамическом режиме, в первый освободившийся поток, 
+      // затем следующий освободившийся поток и т. д.
 //#pragma omp for schedule (guided, 2)
       for (i=0; i<10; i++)
       {
          printf("Íèòü %d âûïîëíèëà èòåðàöèþ %d\n",
-                omp_get_thread_num(), i);
+                omp_get_thread_num(), i);//вывод номера потока
          sleep(1);
       }
    }

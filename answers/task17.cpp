@@ -4,7 +4,7 @@
 int main(int argc, char *argv[])
 {
    int i;
-#pragma omp parallel private(i)
+#pragma omp parallel private(i)//Смотри билет 10
    {
 #pragma omp for schedule (static)
 //#pragma omp for schedule (static, 1)

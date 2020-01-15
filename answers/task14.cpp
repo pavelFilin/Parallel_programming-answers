@@ -3,15 +3,17 @@
 
 int main(int argc, char *argv[])
 {
-   printf("Значение OMP_DYNAMIC: %d\n", omp_get_dynamic());
-   omp_set_dynamic(1);
-   printf("Значение OMP_DYNAMIC: %d\n", omp_get_dynamic());
-#pragma omp parallel num_threads(128)
+   printf("Значение OMP_DYNAMIC: %d\n", omp_get_dynamic());//Возвращает, что запрещено динамическое выделение потоков.
+   omp_set_dynamic(1);//Разрешает динамическое выделение потоков.
+   printf("Значение OMP_DYNAMIC: %d\n", omp_get_dynamic());//Возвращает, что разрешено динамическое выделение потоков.
+#pragma omp parallel num_threads(128)//Синхронизация типа master используется для определения структурного блока программы, 
+   //который будет выполняться исключительно в главном потоке (параллельном потоке с нулевым номером) 
+   //из всего набора параллельных потоков.
    {
-#pragma omp master
+#pragma omp master//
       {
          printf("Параллельная область, %d нитей\n",
-                omp_get_num_threads());
+                omp_get_num_threads());//Возвращает количество потоков в текущей команде параллельных потоков.
       }
    }
 }
